@@ -163,7 +163,7 @@ void MainWindow::reloadData ()
         for ( int i = 0; i < alarmList.count (); ++i )
         {
             Alarm *alarm = Alarm::fromString (alarmList [i]);
-            if (m_leFilterPackage->text ().isEmpty () == false && alarm->getOwnerPackageName () != m_leFilterPackage->text ())
+            if (m_leFilterPackage->text ().isEmpty () == false && !alarm->getOwnerPackageName ().contains(m_leFilterPackage->text ()))
             {
                 delete alarm;
                 continue;
