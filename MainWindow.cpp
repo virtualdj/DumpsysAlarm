@@ -135,6 +135,7 @@ void MainWindow::reloadData ()
     m_leTimestamp->setText (sharedData->getDateTime ());
 
     int pendingAlarmBatches = ParseUtils::getNextNumberAfter (byteArray, "Pending alarm batches: ", offset);
+    bool hasFilteredData = false;
 
     QList<Batch*> listBatches;
     while (true)
@@ -183,6 +184,7 @@ void MainWindow::reloadData ()
             // Delete the Batch if there are no alarms
             delete batch;
             pendingAlarmBatches--;
+            hasFilteredData = true;
         }
 
         if (listBatches.count () == pendingAlarmBatches)
@@ -192,4 +194,7 @@ void MainWindow::reloadData ()
     }
 
     m_modelBatches->setBatchList (listBatches);
+
+    // If we're filtering, expand the TreeView
+    if (hasFilteredData) m_treeBatches->expandAll();
 }
