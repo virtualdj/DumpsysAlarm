@@ -105,6 +105,12 @@ void MainWindow::reloadData ()
         return;
     }
 
+    // Check the exit code to avoid crashing when a device is not found in ADB
+    if (processDumpsysAlarm.exitCode() != 0)
+    {
+        return;
+    }
+
     QByteArray byteArray = processDumpsysAlarm.readAll ();
 
     m_teRawSource->setText (QString (byteArray));
