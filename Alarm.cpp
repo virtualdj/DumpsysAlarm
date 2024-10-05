@@ -135,7 +135,7 @@ QString Alarm::getWhen ()
     {
         SharedData *sharedData = SharedData::getInstance ();
 
-        qulonglong millisecondsToFire = m_when - sharedData->getUptimeMilliseconds ();
+        qlonglong millisecondsToFire = m_when - sharedData->getUptimeMilliseconds ();
 
         return QString ("Fire in %1 seconds").arg (millisecondsToFire / 1000L);
     }
@@ -143,7 +143,7 @@ QString Alarm::getWhen ()
     {
         SharedData *sharedData = SharedData::getInstance ();
 
-        qulonglong millisecondsToFire = m_when - sharedData->getCurrentTimestamp ();
+        qlonglong millisecondsToFire = m_when - sharedData->getCurrentTimestamp ();
 
         return QString ("Fire in %1 seconds").arg (millisecondsToFire / 1000L);
     }
