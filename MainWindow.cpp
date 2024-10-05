@@ -126,12 +126,14 @@ void MainWindow::reloadData ()
     sharedData->setUptimeMilliseconds (components [4].toULongLong ());
 
     qulonglong uptimeSeconds = sharedData->getUptimeMilliseconds () / 1000;
+    qulonglong uptimeDays = uptimeSeconds / (3600 * 24);
+    uptimeSeconds = uptimeSeconds % (3600 * 24);
     qulonglong uptimeHours = uptimeSeconds / 3600;
     qulonglong uptimeMinutes = (uptimeSeconds % 3600) / 60;
     qulonglong uptimeSecs = uptimeSeconds % 60;
 
     m_leSystemUptimeMs->setText (QString ("%1").arg (sharedData->getUptimeMilliseconds ()));
-    m_leSystemUptime->setText (QString ("%1:%2:%3").arg (uptimeHours).arg (uptimeMinutes).arg (uptimeSecs));
+    m_leSystemUptime->setText (QString ("%1d %2h %3m %4s").arg (uptimeDays).arg (uptimeHours, 2, 10, QChar('0')).arg (uptimeMinutes, 2, 10, QChar('0')).arg (uptimeSecs, 2, 10, QChar('0')));
     m_leTimestamp->setText (sharedData->getDateTime ());
 
     int pendingAlarmBatches = ParseUtils::getNextNumberAfter (byteArray, "Pending alarm batches: ", offset);
