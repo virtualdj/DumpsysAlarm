@@ -160,6 +160,7 @@ void MainWindow::reloadData ()
 
         QStringList alarmList = alarmListDefinition.split ("ELAPSED", QString::SkipEmptyParts);
 
+        bool batchHasAlarms = false;
         for ( int i = 0; i < alarmList.count (); ++i )
         {
             Alarm *alarm = Alarm::fromString (alarmList [i]);
@@ -170,9 +171,19 @@ void MainWindow::reloadData ()
             }
 
             batch->appendAlarm (alarm);
+            batchHasAlarms = true;
         }
 
-        listBatches.append (batch);
+        if (batchHasAlarms)
+        {
+            listBatches.append (batch);
+        }
+        else
+        {
+            // Delete the Batch if there are no alarms
+            delete batch;
+            pendingAlarmBatches--;
+        }
 
         if (listBatches.count () == pendingAlarmBatches)
         {
